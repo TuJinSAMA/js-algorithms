@@ -14,7 +14,7 @@ export function defaultToString(item) {
 }
 
 export function recursionFactorial(n, total = 1) {
-  if(n <= 1) return total
+  if (n <= 1) return total
   return recursionFactorial(n - 1, n * total);
 }
 
@@ -55,4 +55,12 @@ export function defaultCompare(a, b) {
     return Compare.EQUALS;
   }
   return a < b ? Compare.LESS_THAN : Compare.BIGGER_THAN;
+}
+
+export const BalanceFactor = {
+  UNBALANCED_RIGHT: 1,
+  SLIGHTLY_UNBALANCED_RIGHT: 2,
+  BALANCED: 3,
+  SLIGHTLY_UNBALANCED_LEFT: 4,
+  UNBALANCED_LEFT: 5
 }
