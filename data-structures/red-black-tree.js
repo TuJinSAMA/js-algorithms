@@ -42,29 +42,52 @@ class RedBlackTree extends BinarySearchTree {
     while (node && node.parent && node.parent.isRed() && node.color !== Colors.BLACK) {
       let parent = node.parent;
       const grandParent = parent.parent;
-      // 如果父节点是祖父节点的左子节点
+      // Case A： 如果父节点是祖父节点的左子节点
       if (grandParent && grandParent.left === parent) {
         const uncle = grandParent.right;
-        // Case A: 叔叔节点也是红色
+        // Case A1： 叔叔节点也是红色
         if (uncle.isRed()) {
           grandParent.color = Colors.RED;
           parent.color = Colors.BLACK;
           uncle.color = Colors.BLACK;
           node = grandParent;
         } else {
-          // Case A1: 叔叔节点是黑色，且当前节点是右子节点 需要进行RL旋转
+          // Case A2: 叔叔节点是黑色，且当前节点是右子节点 需要进行RL旋转
           if (node === parent.right) {
             this.rotationRR(parent);
             node = parent;
             parent = node.parent;
           }
-          // Case A2: 叔叔节点是黑色，且当前节点是左子节点
+          // Case A3: 叔叔节点是黑色，且当前节点是左子节点
           this.rotationLL(parent);
           // 交换颜色
           parent.color = Colors.BLACK;
           grandParent.color = Colors.RED;
           node = parent;
-          
+
+        }
+      } else {
+        // Case B：如果父节点是祖父节点的右子节点
+        const uncle = grandParent.right;
+        // Case B1： 叔叔节点也是红色
+        if (uncle.isRed()) {
+          grandParent.color = Colors.RED;
+          parent.color = Colors.BLACK;
+          uncle.color = Colors.BLACK;
+          node = grandParent;
+        } else {
+          // Case B2: 叔叔节点是黑色，且当前节点是左子节点 需要进行LR旋转
+          if (node === parent.left) {
+            this.rotationLL(parent);
+            node = parent;
+            parent = node.parent;
+          }
+          // Case B3: 叔叔节点是黑色，且当前节点是右子节点
+          this.rotationRR(parent);
+          // 交换颜色
+          parent.color = Colors.BLACK;
+          grandParent.color = Colors.RED;
+          node = parent;
         }
       }
     }
